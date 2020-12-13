@@ -1,5 +1,7 @@
 package easy;
-/*给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+/*107. 二叉树的层次遍历 II
+给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+
 例如：
 给定二叉树 [3,9,20,null,null,15,7],
     3
@@ -19,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BinaryTreeLevelOrderTraversal2 {
+public class BinaryTreeLevelOrderTraversalTwo {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         //List<List<Integer>> lists = new ArrayList<>();
         LinkedList<List<Integer>> lists = new LinkedList<>();

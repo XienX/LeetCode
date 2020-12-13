@@ -55,7 +55,6 @@ N
 化学方程式的任何一边，其中任何一种元素的原子总个数都不超过10^9*/
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -69,40 +68,119 @@ public class HuaXueFangChengShi {
 			String[] s = sc.next().split("=");
 			
 			List<Element> left = getElementsList(s[0]);
-			List<Element> right = getElementsList(s[0]);
+			List<Element> right = getElementsList(s[1]);
 			
-			
+			int leftLen = left.size(), rightLen = right.size();
+			if(leftLen != rightLen)
+				System.out.println("N");
+			else {
+				boolean flag = true;
+				for(int i=0;i<leftLen;i++) {
+					if(!left.get(i).name.equals(right.get(i).name) || left.get(i).count != right.get(i).count) {
+						System.out.println("N");
+						flag = false;
+						break;
+					}
+				}
+				if(flag)
+					System.out.println("Y");
+			}
 		}
 	}
 
 	private static List<Element> getElementsList(String s) {
 		List<Element> ans = new ArrayList<>();
+		String[] ss = s.split("\\+");
 		
-		
-		
+		for(String sss : ss) {
+			int len = sss.length();
+			int initVal = 1;
+			int i = 0, j = 0;
+			
+			if(Character.isDigit(sss.charAt(0))) { // 首位
+				j = 1;
+				while(j < len && Character.isDigit(sss.charAt(j)))
+					j++;
+				initVal = Integer.parseInt(sss.substring(0, j));
+				i = j;
+			}
+			
+			while(i<len) {
+				if(sss.charAt(i) == '(') {
+					ans.add(new Element("(", 0));
+					i++;
+				}
+				else if(sss.charAt(i) == ')') {
+					i++;
+					
+					if(i<len && Character.isDigit(sss.charAt(i))) { // 括号后跟数字
+						j = i+1;
+						while(j < len && Character.isDigit(sss.charAt(j)))
+							j++;
+						
+						int num = Integer.parseInt(sss.substring(i, j));
+						int l = ans.size() - 1;
+						while(!ans.get(l).name.equals("(")) {
+							ans.get(l).count *= num;
+							l--;
+						}
+						ans.remove(l);
+						i = j;
+					}
+					else {
+						int l = ans.size() - 1;
+						while(!ans.get(l).name.equals("("))
+							l--;
+						ans.remove(l);
+					}
+				}
+				else if(Character.isDigit(sss.charAt(i))) {
+					j = i+1;
+					while(j < len && Character.isDigit(sss.charAt(j)))
+						j++;
+					
+					int num = Integer.parseInt(sss.substring(i, j));
+					ans.get(ans.size() - 1).count *= num;
+					i = j;
+				}
+				else {
+					j = i+1;
+					while(j < len && Character.isLowerCase(sss.charAt(j)))
+						j++;
+					ans.add(new Element(sss.substring(i, j), initVal));
+					i = j;
+				}
+			}
+		}
 		
 		Collections.sort(ans, new Comparator<Element>() {
             @Override
             public int compare(Element e1, Element e2) {
-                return e1.getName().compareTo(e2.getName());
+                return e1.name.compareTo(e2.name);
             }
         });
+		
+		int i = 0, max = ans.size()-1;
+		while(i < max) {
+			if (ans.get(i).name.equals(ans.get(i+1).name)) {
+				ans.get(i).count += ans.get(i+1).count;
+				ans.remove(i+1);
+				max--;
+			}
+			else 
+				++i;
+		}
+		
 		return ans;
 	}
 }
 
 class Element{
-	String name;
-	int count;
+	public String name;
+	public int count;
 	
 	public Element(String name, int count) {
 		this.name  = name;
 		this.count = count;
-	}
-
-
-
-	public String getName() {
-		return name;
 	}
 }

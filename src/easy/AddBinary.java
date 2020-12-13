@@ -1,11 +1,19 @@
 package easy;
-/*
+/*67. 二进制求和
 给你两个二进制字符串，返回它们的和（用二进制表示）。
 输入为 非空 字符串且只包含数字1和0。
 
-示例:
+示例1:
+输入: a = "11", b = "1"
+输出: "100"
+
+示例2:
 输入: a = "1010", b = "1011"
 输出: "10101"
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/add-binary
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 提示：
 每个字符串仅由字符 '0' 或 '1' 组成。
@@ -14,8 +22,7 @@ package easy;
 
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/add-binary
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- */
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
 
 public class AddBinary {
     public String addBinary(String a, String b) {
